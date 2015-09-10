@@ -26,6 +26,7 @@ public class MyApplicationService extends Application<MyApplicationConfiguration
     @Override
     public void initialize(Bootstrap<MyApplicationConfiguration> bootstrap) {
         //bootstrap.addCommand(new RunMigrationsCommand());
+        //Swagger configuration goes here
         bootstrap.addBundle(new SwaggerBundle<MyApplicationConfiguration>() {
             @Override
             protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(MyApplicationConfiguration configuration) {
@@ -38,8 +39,7 @@ public class MyApplicationService extends Application<MyApplicationConfiguration
     @Override
     public void run(MyApplicationConfiguration configuration, Environment environment) throws Exception {
 
-        environment.jersey().register(new HelloWorldResource(configuration.getTemplate()));
-
+        //JDBI Configuration goes here
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDatabase(), "h2");
 
@@ -47,9 +47,12 @@ public class MyApplicationService extends Application<MyApplicationConfiguration
         personDAO.createPersonTable();
         final PersonResource personResource = new PersonResource(personDAO);
 
+        //Registering Resources
+        environment.jersey().register(new HelloWorldResource(configuration.getTemplate()));
         environment.jersey().register(personResource);
 
-        environment.healthChecks().register("database", new DaatBaseHealthCheck(jdbi));
+        //Health check-up goes here
+        environment.healthChecks().register("database", new DaatBaseHealthCheck(configuration));
     }
 
 }

@@ -1,27 +1,26 @@
 package com.madhu.health;
 
-import org.h2.engine.Database;
-import org.skife.jdbi.v2.DBI;
 import com.codahale.metrics.health.HealthCheck;
+import com.madhu.MyApplicationConfiguration;
 
 /**
  * @author Madhukar Reddy
  *
  */
-public class DaatBaseHealthCheck extends HealthCheck{
+public class DaatBaseHealthCheck extends HealthCheck {
 
-    private final DBI database;
-    
-    public DaatBaseHealthCheck(DBI database) {
-        this.database = database;
+    private MyApplicationConfiguration configuration;
+
+    public DaatBaseHealthCheck(MyApplicationConfiguration configuration) {
+        this.configuration = configuration;
     }
-    
+
     @Override
     protected Result check() throws Exception {
-        if (database.open().isInTransaction()) {
+        if (configuration.getDatabase().getCheckConnectionOnConnect()) {
             return Result.healthy();
         }
-        return Result.unhealthy("Can't reach database");
+        return Result.unhealthy("Server is not Up");
     }
 
 }
