@@ -13,7 +13,10 @@ This Application contains the Dropwizard Helloworld example and Person to Perfor
 *To Run the server
 
       java -jar target\1.0.1-0.0.1.jar server config.yaml
+*To run db migration script.
 
+      java -jar target\1.0.1-0.0.1.jar migrate config.yaml
+      
 #Rest URL's
 Rest URL for HellowWorld Resource is 
 
