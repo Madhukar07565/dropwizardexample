@@ -5,8 +5,10 @@ Dropwizard JDBI Swagger example application was developed to, as its name implie
 This Application contains the Dropwizard Helloworld example and Person to Perform CURD Operations.
 
 #Running Application
+
 *To package the example run.
       mvn package
+      
 *To Run the server
       java -jar target\1.0.1-0.0.1.jar server config.yaml
 
