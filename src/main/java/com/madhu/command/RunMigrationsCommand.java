@@ -29,6 +29,7 @@ public class RunMigrationsCommand extends ConfiguredCommand<MyApplicationConfigu
             Flyway flyway = new Flyway();
             flyway.setDataSource(ds);
             flyway.setLocations("classpath:db/migration");
+            flyway.init();
             flyway.migrate();
         } finally {
             ds.stop();

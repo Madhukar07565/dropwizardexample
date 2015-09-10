@@ -10,6 +10,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import com.codahale.metrics.annotation.Timed;
 import com.madhu.api.Greeting;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
  * @author Madhukar Reddy
@@ -17,6 +19,7 @@ import com.madhu.api.Greeting;
  */
 @Path("/hello")
 @Produces(MediaType.APPLICATION_JSON)
+@Api("/hello")
 public class HelloWorldResource {
 
     
@@ -31,6 +34,7 @@ public class HelloWorldResource {
     @GET
     @Timed(name = "get-requests")
     @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
+    @ApiOperation("Hello World Test")
     public Greeting sayHello(@QueryParam("name") String name) {
         return new Greeting(String.format(template, name), counter.incrementAndGet());
     }

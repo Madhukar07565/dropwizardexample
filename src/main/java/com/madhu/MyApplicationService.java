@@ -25,7 +25,8 @@ public class MyApplicationService extends Application<MyApplicationConfiguration
 
     @Override
     public void initialize(Bootstrap<MyApplicationConfiguration> bootstrap) {
-        //bootstrap.addCommand(new RunMigrationsCommand());
+        //DB migrate Coomand
+        bootstrap.addCommand(new RunMigrationsCommand());
         //Swagger configuration goes here
         bootstrap.addBundle(new SwaggerBundle<MyApplicationConfiguration>() {
             @Override
