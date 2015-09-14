@@ -77,6 +77,7 @@ public class PersonResource {
     @Path("/{id}")
     @ApiOperation("Person Delete")
     @ApiResponses({ @ApiResponse(code = 200, message = "Person successfully deleted.") })
+    @Consumes(MediaType.TEXT_PLAIN)
     public Response delete(@PathParam("id") int id) {
         personDAO.deleteById(id);
         return Response.status(Response.Status.OK.getStatusCode()).build();
