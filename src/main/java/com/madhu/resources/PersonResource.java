@@ -57,7 +57,7 @@ public class PersonResource {
     @ApiResponses({ @ApiResponse(code = 201, message = "Person successfully created.") })
     public Response add(@Valid @ApiParam(required = true, value = "Person to create") Person person) {
         int newId = personDAO.insert(person);
-        return Response.status(Response.Status.CREATED.getStatusCode()).entity("Created SuccessFully").build();
+        return Response.status(Response.Status.CREATED.getStatusCode()).build();
     }
 
     @PUT
@@ -77,8 +77,9 @@ public class PersonResource {
     @Path("/{id}")
     @ApiOperation("Person Delete")
     @ApiResponses({ @ApiResponse(code = 200, message = "Person successfully deleted.") })
-    public void delete(@PathParam("id") int id) {
+    public Response delete(@PathParam("id") int id) {
         personDAO.deleteById(id);
+        return Response.status(Response.Status.OK.getStatusCode()).build();
     }
 
 }
