@@ -21,7 +21,6 @@ public class RunMigrationsCommand extends ConfiguredCommand<MyApplicationConfigu
         super("migrate", "Run DB Migrations");
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void run(Bootstrap<MyApplicationConfiguration> bootstrap, Namespace namespace,
             MyApplicationConfiguration configuration) throws Exception {
@@ -32,8 +31,8 @@ public class RunMigrationsCommand extends ConfiguredCommand<MyApplicationConfigu
             Flyway flyway = new Flyway();
             flyway.setDataSource(ds);
             flyway.setLocations("classpath:db/migration");
-            flyway.setInitialVersion("0");
-            flyway.init();
+            flyway.setInitVersion("0");
+            flyway.setInitOnMigrate(true);
             flyway.migrate();
         } finally {
             ds.stop();
