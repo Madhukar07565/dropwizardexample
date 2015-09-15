@@ -6,6 +6,8 @@ import io.dropwizard.setup.Bootstrap;
 import net.sourceforge.argparse4j.inf.Namespace;
 import com.codahale.metrics.MetricRegistry;
 import com.googlecode.flyway.core.Flyway;
+import com.googlecode.flyway.core.api.MigrationVersion;
+import com.googlecode.flyway.core.migration.SchemaVersion;
 import com.madhu.MyApplicationConfiguration;
 
 /**
@@ -19,6 +21,7 @@ public class RunMigrationsCommand extends ConfiguredCommand<MyApplicationConfigu
         super("migrate", "Run DB Migrations");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void run(Bootstrap<MyApplicationConfiguration> bootstrap, Namespace namespace,
             MyApplicationConfiguration configuration) throws Exception {
@@ -29,6 +32,7 @@ public class RunMigrationsCommand extends ConfiguredCommand<MyApplicationConfigu
             Flyway flyway = new Flyway();
             flyway.setDataSource(ds);
             flyway.setLocations("classpath:db/migration");
+            flyway.setInitialVersion("0");
             flyway.init();
             flyway.migrate();
         } finally {
