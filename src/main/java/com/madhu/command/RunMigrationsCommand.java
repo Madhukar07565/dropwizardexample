@@ -6,8 +6,6 @@ import io.dropwizard.setup.Bootstrap;
 import net.sourceforge.argparse4j.inf.Namespace;
 import com.codahale.metrics.MetricRegistry;
 import com.googlecode.flyway.core.Flyway;
-import com.googlecode.flyway.core.api.MigrationVersion;
-import com.googlecode.flyway.core.migration.SchemaVersion;
 import com.madhu.MyApplicationConfiguration;
 
 /**
@@ -15,7 +13,6 @@ import com.madhu.MyApplicationConfiguration;
  *
  */
 public class RunMigrationsCommand extends ConfiguredCommand<MyApplicationConfiguration> {
-    
 
     public RunMigrationsCommand() {
         super("migrate", "Run DB Migrations");
@@ -38,6 +35,5 @@ public class RunMigrationsCommand extends ConfiguredCommand<MyApplicationConfigu
             ds.stop();
         }
     }
-
 
 }

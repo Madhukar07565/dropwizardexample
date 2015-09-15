@@ -1,0 +1,1 @@
+delete PERSON where id = 4444;
