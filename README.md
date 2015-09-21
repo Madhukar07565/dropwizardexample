@@ -29,6 +29,8 @@ Rest URL for Person Resource:  You can Navigate to the below URL to find what ar
 Swagger URL : 
 
      http://localhost:8080/swagger 
+     
+ ![alt text](swaggerUI.png "API UI Description")
 
 In this page you can click on show/hide operation whicjh will display the list of resources to access.
 
