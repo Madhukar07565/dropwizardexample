@@ -6,15 +6,15 @@ This Application contains the Dropwizard Helloworld example and Person to Perfor
 
 #Running Application
 
-*To package the example run.
+To package the example run.
 
       mvn package
       
-*To run db migration script.
+To run db migration script.
 
       java -jar target\1.0.1-0.0.1.jar migrate config.yaml
       
-*To Run the server
+To Run the server
 
       java -jar target\1.0.1-0.0.1.jar server config.yaml
 
@@ -31,6 +31,7 @@ Swagger URL :
      http://localhost:8080/swagger 
 
 In this page you can click on show/hide operation whicjh will display the list of resources to access.
+
 
 #Health CheckUp
 
