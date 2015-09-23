@@ -1,7 +1,9 @@
 package com.madhu;
 
 import io.dropwizard.Application;
+import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jdbi.DBIFactory;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
@@ -25,9 +27,19 @@ public class MyApplicationService extends Application<MyApplicationConfiguration
 
     @Override
     public void initialize(Bootstrap<MyApplicationConfiguration> bootstrap) {
-        //DB migrate Coomand
+        // DB migrate Coomand
         bootstrap.addCommand(new RunMigrationsCommand());
-        //Swagger configuration goes here
+        // Adding Migrations Bundle
+        bootstrap.addBundle(new MigrationsBundle<MyApplicationConfiguration>() {
+
+            @Override
+            public DataSourceFactory getDataSourceFactory(MyApplicationConfiguration configuration) {
+                return configuration.getDatabase();
+            }
+
+        });
+
+        // Swagger configuration goes here
         bootstrap.addBundle(new SwaggerBundle<MyApplicationConfiguration>() {
             @Override
             protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(MyApplicationConfiguration configuration) {
@@ -40,19 +52,19 @@ public class MyApplicationService extends Application<MyApplicationConfiguration
     @Override
     public void run(MyApplicationConfiguration configuration, Environment environment) throws Exception {
 
-        //JDBI Configuration goes here
+        // JDBI Configuration goes here
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDatabase(), "h2");
 
         final PersonDAO personDAO = jdbi.onDemand(PersonDAO.class);
         personDAO.createPersonTable();
-        final PersonResource personResource = new PersonResource(personDAO);
+        final PersonResource personResource = new PersonResource(personDAO, jdbi);
 
-        //Registering Resources
+        // Registering Resources
         environment.jersey().register(new HelloWorldResource(configuration.getTemplate()));
         environment.jersey().register(personResource);
 
-        //Health check-up goes here
+        // Health check-up goes here
         environment.healthChecks().register("database", new DaatBaseHealthCheck(configuration));
     }
 

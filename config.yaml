@@ -2,6 +2,39 @@ template: Hello, %s!
 
 name: Madhukar
 
+# server details
+server:
+  type: server
+  
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+  requestLog:
+    timeZone: UTC
+    appenders:
+      - type: file
+        currentLogFilename: ./logs/requests.log
+        threshold: ALL
+        archive: true
+        archivedLogFilenamePattern: ./logs/requests-%d.log.gz
+        archivedFileCount: 5
+        timeZone: UTC
+#logging
+logging:
+  level: INFO
+  appenders:
+    - type: file
+      currentLogFilename: ./logs/application.log
+      threshold: ALL
+      archive: true
+      archivedLogFilenamePattern: ./logs/application-%d.log
+      archivedFileCount: 2
+      timeZone: UTC
+
+#database
 database:
   driverClass: org.h2.Driver
   user: sa
@@ -16,3 +49,4 @@ database:
   checkConnectionWhileIdle: false
   evictionInterval: 10s
   minIdleTime: 1 minute
+
